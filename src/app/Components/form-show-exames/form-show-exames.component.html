@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="col-md-12 p-4 ">
+    <h2 class="mb-4 text-center">Detalhes do Exame</h2>
+    <form>
+      <div class="form-group mb-2 p-2">
+        <label for="data">Data:</label>
+        <input type="text" class="form-control" id="data" value="{{Exame?.Data}}" readonly disabled>
+      </div>
+      <div class="form-group mb-2 p-2">
+        <label for="nrExame">Nr. Exame:</label>
+        <input type="text" class="form-control" id="nrExame" value="{{Exame?.NrExame}}" readonly disabled>
+      </div>
+      <div class="form-group mb-2 p-2">
+        <label for="nrGuia">Nr. Guia:</label>
+        <input type="text" class="form-control" id="nrGuia" value="{{Exame?.NrGuia}}" readonly disabled>
+      </div>
+      <div class="form-group mb-2 p-2">
+        <label for="previsaoEntrega">Previsão de Entrega:</label>
+        <input type="text" class="form-control" id="previsaoEntrega" value="{{Exame?.PrevisaoResultado}}" readonly disabled>
+      </div>
+      <div class="form-group mb-2 p-2">
+        <label for="paciente">Paciente:</label>
+        <input type="text" class="form-control" id="paciente" value="{{Exame?.Nome}}" readonly disabled>
+      </div>
+      <div class="form-group mb-2 p-2">
+        <label for="exame">Exame:</label>
+        <input type="text" class="form-control" id="exame" value="{{Exame?.TipoExame}}" readonly disabled>
+      </div>
+      <div class="form-group mb-2 p-2">
+        <label for="situacao">Situação:</label>
+        <input type="text" class="form-control" id="situacao" value="{{Exame?.Situacao}}" readonly disabled>
+      </div>
+      <div class="form-group mb-2 p-2 text-center">
+        <label for="laudo">Download Laudo</label>
+        <button class="btn btn-info d-block m-auto w-auto mt-2" (click)="DownloadPDF()" id="laudo">Download</button>
+      </div>
+    </form>
+  </div>
+</div>
+  

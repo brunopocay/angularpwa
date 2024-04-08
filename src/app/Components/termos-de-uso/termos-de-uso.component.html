@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Ao acessar os resultados dos exames disponíveis neste site, você concorda com os seguintes termos:</h2>
+<mat-dialog-content class="mat-typography">
+    <ol>
+        <li>
+            <strong>Responsabilidade pela Conformidade LGPD:</strong> 
+            Você concorda em cumprir integralmente com os requisitos da Lei Geral de Proteção de Dados (LGPD) em relação aos dados de saúde pessoais fornecidos através deste serviço.
+        </li>
+        <li>
+            <strong>Confidencialidade dos Dados:</strong> 
+            Você reconhece que os resultados dos exames contêm informações confidenciais e pessoais. Portanto, você concorda em manter essas informações estritamente confidenciais e protegidas contra acesso não autorizado.
+        </li>
+        <li>
+            <strong>Responsabilidade pelo Acesso:</strong> 
+            Você é o único responsável pelo acesso aos resultados dos exames. Certifique-se de tomar todas as medidas necessárias para garantir que suas credenciais de acesso sejam mantidas em segurança e não compartilhadas com terceiros não autorizados.
+        </li>
+        <li>
+            <strong>Prevenção de Vazamento de Dados:</strong> 
+            Você concorda em tomar as devidas precauções para evitar o vazamento de dados pessoais contidos nos resultados dos exames, incluindo a utilização de medidas de segurança adequadas em seus dispositivos e redes.
+        </li>
+    </ol>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false">Fechar</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Aceitar</button>
+</mat-dialog-actions>

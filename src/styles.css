@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+/* .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus, .form-label:focus{
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+} */
+
+*{
+  box-shadow: none !important;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.alert.alert-danger {
+  color: red;
+  background-color: #f8d7da;
+  text-align: center;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 5px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
