@@ -1,0 +1,17 @@
+div{
+    font-family: 'Montserrat', sans-serif;
+}
+
+p{
+    font-weight: bold;
+    font-size:18px;
+}
+
+.container{
+    border: 2px solid black;
+    background-color: whitesmoke;
+    position: relative;
+    top: -5vh;
+    border-radius: 15px;
+}
+
