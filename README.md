@@ -1,27 +1,69 @@
-# FrontWebLabsteccaAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.
+# FrontWeb Labstecca Angular
 
-## Development server
+O projeto Labstecca foi designado para substituir o antigo sistema de consultas a exames. Esse novo projeto visa apenas facilitar os novos usuarios a acessarem os exames e seus filtros dependendo do usuario.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Autores
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- [Bruno Pocay](https://github.com/brunopocay)
 
-## Build
+## Co-Autores
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- [Thiago Lavras](https://github.com/thiagolavras)
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Stack utilizada
 
-## Running end-to-end tests
+**Front-end:**  Angular
+  
+**Back-end:** Delphi.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+## Rodando localmente
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Clone o projeto
+
+```bash
+  git clone https://github.com/Cbm-Info/Sphera-Front-Web-Angular-V2.git
+```
+
+Entre no diretório do projeto
+
+```bash
+  cd DiretórioDoProjeto
+```
+
+Instale as dependências
+
+```bash
+  npm install
+```
+
+Inicie o servidor
+
+```bash
+  npm start
+```
+
+Navegar para `http://localhost:4200/`. Aplicação irá recarregar automaticamente se você fizer qualquer alteração dentro dos arquivos do projeto.
+
+## Contribuindo
+
+Contribuições são sempre bem-vindas!
+
+Executar `ng generate component component-name` para gerar um novo componente.  
+Você também pode usar `ng generate directive|pipe|service|class|guard|interface|enum|module` para gerar outros tipos de "componentes" para usar no código.  
+Opcionalmente o comando de gerar componente pode ser usado de tal forma: `ng g c component-name`.  
+Se precisar inserir dentro de um diretório relativo: `ng g c SeuDiretorio/component-name`. Para gerar outros tipos de "componentes" de forma abreviada consultar documentação oficial disponivel em: https://angular.io/
+
+
+## Referência
+
+Foram utilizadas as seguintes bibliotecas no projeto com suas respectivas versões e link para documentação.  
+ - Angular CLI - v17.3.2 : `https://angular.io/`  
+ - Angular Material - v17.3.1 : `https://material.angular.io/`  
+ - SweetAlertService: - v11.10.7 : `https://sweetalert2.github.io/`  
+ - Bootstrap - v5. * : `https://getbootstrap.com/docs/5.0/getting-started/introduction/`  
+ - FontAwesome - v6.4 : `https://fontawesome.com/start`
+
