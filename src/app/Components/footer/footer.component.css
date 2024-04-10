@@ -1,0 +1,24 @@
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 5px 0; 
+}
+
+.footer-authenticated {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25px; /* Ajuste a altura conforme necessário */
+    text-align: center;
+    z-index: 999;
+    font-size: 14px;
+    color: white !important;
+    background-color: gray;
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
