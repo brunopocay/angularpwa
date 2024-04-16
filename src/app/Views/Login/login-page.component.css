@@ -1,0 +1,25 @@
+@media screen and (max-width:550px) {
+    #register{
+        width:auto !important;
+    }
+}
+
+a{
+    cursor: pointer;
+}
+
+.container{
+    margin-top: 50px !important;
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
+}
+
+.login-form{     
+    border-top: 2px solid rgba(0, 0, 255, 0.375); 
+    border-right: 2px solid rgba(0, 0, 255, 0.375);
+    border-bottom: 2px solid #ccc; 
+    border-left: 2px solid #ccc; 
+    border-radius: 15px; 
+    padding: 16px;
+}
+
