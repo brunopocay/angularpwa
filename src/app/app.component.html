@@ -1,0 +1,7 @@
+<body [ngClass]="{ 'not-authenticated': !authenticated(), '': authenticated() }">
+  <app-nav-menu></app-nav-menu> 
+    <main>   
+      <router-outlet></router-outlet>
+    </main>
+</body>
+

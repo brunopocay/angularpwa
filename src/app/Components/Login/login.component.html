@@ -1,0 +1,57 @@
+<form class="d-flex w-50 m-auto justify-content-center" [formGroup]="loginForm" (ngSubmit)="login()" >
+    <div class="text-center mb-3 bold marginTop">   
+
+      <div *ngIf="showSpan">
+        <div class="d-flex justify-content-center">
+          <span class="loading-spinner"></span>
+        </div>
+        <div>
+          <span class="showSpanned">Carregando</span>
+        </div>
+      </div>
+      <div *ngIf="responseError">
+        <div>
+          <span class="error-message">{{responseMessageError}}</span>
+        </div>
+      </div>
+
+    <div class="mb-2">
+      <label class="form-label " for="Usuario">Usuário</label>
+      <div>
+        <input type="text" id="Usuario" class="form-control" placeholder="Digite seu usuário" formControlName="User"/>     
+      </div>
+    </div>
+    
+    <div class="mb-2">
+      <label class="form-label" for="Password">Senha</label>
+      <div class="input-group">
+        <input 
+          [type]="fieldTextType ? 'text' : 'password'"
+          id="Password" 
+          class="form-control" 
+          placeholder="Senha" 
+          formControlName="Password" 
+          required />
+        <div class="input-group-append">
+          <span class="input-group-text" style="cursor: pointer;" (click)="toggleFieldTextType()"> 
+            <i class="fa" [ngClass]="{'fa-eye-slash': !fieldTextType, 'fa-eye': fieldTextType}"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    
+     
+    <div class="form-check d-flex justify-content-center mt-4 mb-2">
+      <input class="form-check-input me-2" type="checkbox" formControlName="checkterms" required/>
+      <label class="form-check-label" for="registerCheck">
+        Eu li e concordo com os termos de uso 
+        <br>
+        <a class="form-label" style="font-size: 12px;" (click)="checkTermsAndConditions()">Clique aqui para ler os termos</a>
+      </label>
+    </div>
+    <div *ngIf="loginForm.get('checkterms')!.invalid && (loginForm.get('checkterms')!.dirty || loginForm.get('checkterms')!.touched)">
+      <span *ngIf="loginForm.get('checkterms')?.errors?.['required']" class="alert alert-danger">Obrigátorio aceitar os termos de uso.</span>
+    </div>
+    <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary btn-block mt-4 w-100">Acessar Exames <i class="fa-solid fa-right-to-bracket"></i></button>
+  </div>
+</form>
