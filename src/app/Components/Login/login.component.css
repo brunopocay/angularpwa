@@ -45,6 +45,10 @@ a:hover{
     color: red;
     font-weight: bold;
 }
+
+.btn:disabled{
+    opacity: 0.25;
+}
   
   
 @keyframes spin {

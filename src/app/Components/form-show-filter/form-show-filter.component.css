@@ -1,10 +1,12 @@
 .tableResponsive{
   width: 100%;
   overflow-x: auto;
+  background-color: white;
 }
 
 table {
   width: 100%;
+  cursor: default;
 }
 
 .mat-mdc-form-field {
@@ -14,4 +16,5 @@ table {
 
 td, th {
   width: 25%;
+  white-space: nowrap;
 }
