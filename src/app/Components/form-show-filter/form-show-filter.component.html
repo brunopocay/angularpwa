@@ -25,20 +25,20 @@
         </div>  
       </div>
       <div class="col-md-6 form-group">
-        <label>Requisição</label>
+        <label>Requisição <i class="fa-solid fa-file-lines"></i></label>
         <input type="text" class="form-control" [(ngModel)]="requisicao" name="requisicao">
       </div>
     </div>
     
     <div class="row mb-2 mt-2">
       <div class="col-md-6 form-group">
-        <label>Hospital</label>
+        <label>Hospital <i class="fa-solid fa-hospital"></i></label>
         <select class="form-select" name="hospital" [(ngModel)]="hospital" >
           <option *ngFor="let hospital of hospitais" [value]="hospital.Id">{{hospital.Name}}</option>
         </select>
       </div> 
       <div class="col-md-6 form-group" >
-        <label>Origem</label>
+        <label>Origem <i class="fa-solid fa-globe"></i></label>
         <select class="form-select" name="origem" [(ngModel)]="nomeOrigem">
           <option *ngFor="let origem of origens" [value]="origem.Id">{{origem.Name}}</option>
         </select>
@@ -46,13 +46,13 @@
     </div>
     <div class="row mb-2 mt-2">
       <div class="col-md-6 form-group">
-        <label>Patologista</label>
+        <label>Patologista <i class="fa-solid fa-vial-virus"></i></label>
         <select class="form-select" name="patologista" [(ngModel)]="patologista">
           <option *ngFor="let patologista of patologistas" [value]="patologista.Id">{{patologista.Name}}</option>
         </select>
       </div>
       <div class="col-md-6 form-group">
-        <label>Médico</label>
+        <label>Médico <i class="fa-solid fa-user-doctor"></i></label>
         <select class="form-select" name="medico" [(ngModel)]="medico">
           <option *ngFor="let medico of medicos" [value]="medico.Id">{{medico.Name}}</option>
         </select>
@@ -60,18 +60,17 @@
     </div>
     <div class="row mb-2 mt-2">
       <div class="col-md-6 form-group">
-        <label>Convênio</label>
+        <label>Convênio <i class="fa-solid fa-hand-holding-medical"></i></label>
         <select class="form-select" name="convenio" [(ngModel)]="convenio" >
           <option *ngFor="let convenio of convenios" [value]="convenio.Id">{{convenio.Name}}</option>
         </select>
       </div>
       <div class="col-md-6 form-group mt-4 d-flex justify-content-center">
-        <button class="me-2 btn btn-primary" type="submit">Filtrar</button>
-        <button class="btn btn-danger" type="button" (click)="limparFiltros()">Limpar Filtro</button>
+        <button class="me-2 btn btn-primary" type="submit">Filtrar <i class="fa-solid fa-filter"></i></button>
+        <button class="btn btn-danger" type="button" (click)="limparFiltros()">Limpar Filtro <i class="fa-solid fa-filter-circle-xmark"></i></button>
       </div>
     </div>    
   </form>
-
   <div class="mt-4">
     <mat-form-field>
       <mat-label>Pesquisar pelo Nome do Paciente</mat-label>
@@ -133,7 +132,7 @@
         <mat-spinner diameter="48" class="mt-4"></mat-spinner>
       </div>
       <mat-paginator 
-          class="w-100"
+          class=""
           [pageSizeOptions]="[5, 10, 25]"
           aria-label="Select page">
       </mat-paginator>  

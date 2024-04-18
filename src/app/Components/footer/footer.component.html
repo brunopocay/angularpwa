@@ -1,0 +1,10 @@
+<footer [ngClass]="{'footer-authenticated' : authenticated}">
+    <img *ngIf="!authenticated" src="/assets/ImagensLabstecca/logobrancocbm.png" style="width: 150px;" alt="logo-cbm">
+    <br>
+    <div>
+      <span [ngClass]="{'text-dark' : authenticated , 'text-white' : !authenticated}">
+        Desenvolvido por <a [ngStyle]="!authenticated ? {'color': 'deepskyblue'} : {}" href="https://site.cbminformatica.com.br/" target="_blank" href="https://site.cbminformatica.com.br/" target="_blank">
+          CBM Assessoria e Informática LTDA</a>. Todos os direitos reservados © 2024
+      </span>
+    </div>
+</footer>
