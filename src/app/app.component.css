@@ -1,8 +1,11 @@
 .not-authenticated {
-    /* background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(75, 0, 255)) !important; */
     background: url("../assets/ImagensLabstecca/bg.jpg") no-repeat fixed;
     background-size: cover;
     overflow-y: hidden; 
     height: 100vh;
 }
 
+main{
+    padding-bottom: 16px;
+    position: relative;
+}
