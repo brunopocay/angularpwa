@@ -11,16 +11,15 @@ import { AuthService } from '../Services/auth.service';
 
   constructor(private authService: AuthService, private route: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean> | boolean {        
-    const authSessao$ = this.authService.getAuthSessao();
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {        
+    const authSessao = this.authService.getAuthSessao();
 
-    if(authSessao$){
+    if(authSessao && authSessao.sessao && authSessao.tipoUsuario){
       return true;
     } else {
-      this.route.navigate(['/login'])
+      this.route.navigate(['/login']);
       return false;
     }
-
   }
 }
 

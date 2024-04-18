@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit(): void {
     if(this.UserIsLoggedIn() == true){
-      this.router.navigate(['/']);     
+      this.router.navigate(['/consultaexames']);     
     }    
   }
 
