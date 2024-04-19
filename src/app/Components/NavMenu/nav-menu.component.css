@@ -18,6 +18,13 @@ html {
 @media (max-width: 768px) {
   img {
     content: url("/assets/ImagensLabstecca/icone.png");
+    max-width: 125px;
+  }
+}
+
+@media (min-width: 769px) {
+  img {
+    max-width: 500px;
   }
 }
 
