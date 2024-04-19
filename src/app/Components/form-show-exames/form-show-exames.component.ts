@@ -5,6 +5,7 @@ import { Exame } from '../../Models/Exame';
 import { AuthService } from '../../Services/auth.service';
 import { DownloadService } from '../../Services/download.service';
 import { ExamesService } from '../../Services/exames.service';
+import { ApiResponseExames } from '../../Models/ApiResponseExames';
 
 @Component({
   selector: 'app-form-show-exames',
@@ -30,9 +31,9 @@ export class FormShowExamesComponent implements OnInit {
     if(this.localStorageItens.sessao != undefined) {
       this.exameService$.GetExames(this.localStorageItens.sessao).pipe(
         take(1) 
-      ).subscribe((response: ApiResponse<Exame[]>) => {
-        if(response.IsSucess)
-          this.Exame = response.Data[0];
+      ).subscribe((response: ApiResponseExames) => {
+        if(response.IsSucess)    
+          this.Exame = response.Data?.Exames[0]
       });
     }
   }
