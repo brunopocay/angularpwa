@@ -1,11 +1,10 @@
-.not-authenticated {
-    background: url("../assets/ImagensLabstecca/bg.jpg") no-repeat fixed;
-    background-size: cover;
-    overflow-y: hidden; 
-    height: 100vh;
-}
-
 main{
     padding-bottom: 16px;
-    position: relative;
+}
+
+.not-authenticated{
+    background: url("/assets/ImagensLabstecca/bg.jpg") no-repeat fixed;
+    background-size: cover;
+    height: 100vh;
+    margin: 0px 0px 0px;
 }
