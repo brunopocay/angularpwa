@@ -19,6 +19,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FooterComponent } from './Components/footer/footer.component';
+import {MatCardModule} from '@angular/material/card';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     LoginPage,
     FormShowExamesComponent,
     FormShowFilterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTableModule,
     MatInputModule,
     MatFormFieldModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCardModule
   ],
   providers: [
     {

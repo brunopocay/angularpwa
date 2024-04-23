@@ -1,9 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../Models/ApiResponse';
 import { environment } from '../../environments/environment';
-import { Exame } from '../Models/Exame';
 import { ApiResponseExames } from '../Models/ApiResponseExames';
 
 @Injectable({
@@ -14,7 +12,7 @@ export class ExamesService {
 
   private urlapi$ = 'exames';
 
-  public GetExames(idSessao: string, dataInicial?: string, dataFinal?: string):Observable<ApiResponse<Exame[]>>{
+  public GetExames(idSessao: string, dataInicial?: string, dataFinal?: string):Observable<ApiResponseExames>{
     const httpOptions$ = {headers: new HttpHeaders({'Content-Type': 'application/json'})}
     let params = new HttpParams()
       .set('sessao', idSessao)
@@ -26,7 +24,7 @@ export class ExamesService {
     if (dataFinal !== undefined) {
       params = params.set('DataFinal', dataFinal);
     }
-    return this.http$.get<ApiResponse<Exame[]>>(`${environment.apiURL}/${this.urlapi$}`, {params:  params, ...httpOptions$});
+    return this.http$.get<ApiResponseExames>(`${environment.apiURL}/${this.urlapi$}`, {params:  params, ...httpOptions$});
   }
 
   public GetExamesWithFilter(

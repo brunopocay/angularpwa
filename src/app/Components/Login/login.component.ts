@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
         this.showSpan = false;
         this.responseError = false;
         this.authService.setAuthSessao(response);
-        this.router.navigate(['/']);
+        this.router.navigate(['/consultaexames']);
       });
     }
   }

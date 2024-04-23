@@ -1,149 +1,152 @@
-<div class="col p-4">
-  <h2>Pesquisa Exames</h2>
-  <form #formulario="ngForm" (submit)="filterByData()">
-    <div class="row mb-2 mt-2">
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Data inicial <small style="color: red;">*</small></label>
-              <input type="date" class="form-control" [(ngModel)]="dataMin" name="dataInicial" #dataInicial="ngModel" required>
-              <div *ngIf="dataInicial.invalid && (dataInicial.dirty || dataInicial.touched)" style="color: red;">
-                Data inicial é obrigatória
+<div class="row p-2">
+  <div class="col-lg-12 mt-4 mb-4 containerCustom p-4">
+    <h2>Pesquisa Exames</h2>
+    <form #formulario="ngForm" (submit)="filterByData()">
+      <div class="row mb-2 mt-2">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Data inicial <small style="color: red;">*</small></label>
+                <input type="date" class="form-control" [(ngModel)]="dataMin" name="dataInicial" #dataInicial="ngModel"
+                  required>
+                <div *ngIf="dataInicial.invalid && (dataInicial.dirty || dataInicial.touched)" style="color: red;">
+                  Data inicial é obrigatória
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Data final <small style="color: red;">*</small></label>
+                <input type="date" class="form-control" [(ngModel)]="dataMax" name="dataFinal" #dataFinal="ngModel"
+                  [max]="getMaxDate()" required>
+                <div *ngIf="dataFinal.invalid && (dataFinal.dirty || dataFinal.touched)" style="color: red;">
+                  <div *ngIf="dataFinal.errors?.['required']">Data Final é obrigatória</div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Data final <small style="color: red;">*</small></label>
-              <input type="date" class="form-control" [(ngModel)]="dataMax" name="dataFinal" #dataFinal="ngModel" [max]="getMaxDate()" required>
-              <div *ngIf="dataFinal.invalid && (dataFinal.dirty || dataFinal.touched)" style="color: red;">
-                <div *ngIf="dataFinal.errors?.['required']">Data Final é obrigatória</div>
-              </div>
-            </div>
-          </div>
-        </div>  
+        </div>
+        <div class="col-md-6 form-group">
+          <label>Requisição <i class="fa-solid fa-file-lines"></i></label>
+          <input type="text" class="form-control" [(ngModel)]="requisicao" name="requisicao">
+        </div>
       </div>
-      <div class="col-md-6 form-group">
-        <label>Requisição</label>
-        <input type="text" class="form-control" [(ngModel)]="requisicao" name="requisicao">
-      </div>
-    </div>
-    
-    <div class="row mb-2 mt-2">
-      <div class="col-md-6 form-group">
-        <label>Hospital</label>
-        <select class="form-select" name="hospital" [(ngModel)]="hospital" >
-          <option *ngFor="let hospital of hospitais" [value]="hospital.Id">{{hospital.Name}}</option>
-        </select>
-      </div> 
-      <div class="col-md-6 form-group" >
-        <label>Origem</label>
-        <select class="form-select" name="origem" [(ngModel)]="nomeOrigem">
-          <option *ngFor="let origem of origens" [value]="origem.Id">{{origem.Name}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="row mb-2 mt-2">
-      <div class="col-md-6 form-group">
-        <label>Patologista</label>
-        <select class="form-select" name="patologista" [(ngModel)]="patologista">
-          <option *ngFor="let patologista of patologistas" [value]="patologista.Id">{{patologista.Name}}</option>
-        </select>
-      </div>
-      <div class="col-md-6 form-group">
-        <label>Médico</label>
-        <select class="form-select" name="medico" [(ngModel)]="medico">
-          <option *ngFor="let medico of medicos" [value]="medico.Id">{{medico.Name}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="row mb-2 mt-2">
-      <div class="col-md-6 form-group">
-        <label>Convênio</label>
-        <select class="form-select" name="convenio" [(ngModel)]="convenio" >
-          <option *ngFor="let convenio of convenios" [value]="convenio.Id">{{convenio.Name}}</option>
-        </select>
-      </div>
-      <div class="col-md-6 form-group mt-4 d-flex justify-content-center">
-        <button class="me-2 btn btn-primary" type="submit">Filtrar</button>
-        <button class="btn btn-danger" type="button" (click)="limparFiltros()">Limpar Filtro</button>
-      </div>
-    </div>    
-  </form>
 
-  <div class="mt-4">
-    <mat-form-field>
-      <mat-label>Pesquisar pelo Nome do Paciente</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Insira aqui o nome do paciente" #input>
-    </mat-form-field> 
-  
-    <div class="tableResponsive">
-      <table mat-table [dataSource]="dataSource" matSort>
-      
-        <ng-container matColumnDef="Data">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
-          <td mat-cell *matCellDef="let exame"> {{exame.Data}} </td>
-        </ng-container> 
-      
-        <ng-container matColumnDef="Nr.Exame">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nr.Exame</th>
-          <td mat-cell *matCellDef="let exame"> {{exame.NrExame}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="Nr.Guia">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nr.Guia</th>
-          <td mat-cell *matCellDef="let exame"> {{exame.NrGuia}} </td>
-        </ng-container>
-        
-        <ng-container matColumnDef="Previsão de Resultado">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Previsão de Resultado</th>
-          <td mat-cell *matCellDef="let exame"> {{exame.PrevisaoResultado}} </td>
-        </ng-container>
-            
-        <ng-container matColumnDef="Paciente">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Paciente</th>
-          <td mat-cell *matCellDef="let exame"> {{exame.Nome}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="Exame">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Exame</th>
-          <td mat-cell *matCellDef="let exame"> {{exame.Exame}} </td>
-        </ng-container>
-  
-        <ng-container matColumnDef="Situação">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Situação</th>
-          <td mat-cell *matCellDef="let exame"> {{exame.Situacao}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="Laudo">
-          <th mat-header-cell *matHeaderCellDef>Laudo</th>
-          <td mat-cell *matCellDef="let exame">
-            <button *ngIf="exame.DownloadPronto; else DontShowButton" class="btn btn-info btn-sm" (click)="DownloadPDF($event)" [value]="exame.NrExame">
-              Baixar Laudo
-            </button>
-          </td>
-        </ng-container>
-        
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        
-      </table>   
-      <div *ngIf="IsLoading; else ShowSpanNotFound" style="display: flex; justify-content: center; align-items: center; background: white;">
-        <mat-spinner diameter="48" class="mt-4"></mat-spinner>
+      <div class="row mb-2 mt-2">
+        <div class="col-md-6 form-group">
+          <label>Hospital <i class="fa-solid fa-hospital"></i></label>
+          <select class="form-select" name="hospital" [(ngModel)]="hospital">
+            <option *ngFor="let hospital of hospitais" [value]="hospital.Id">{{hospital.Name}}</option>
+          </select>
+        </div>
+        <div class="col-md-6 form-group">
+          <label>Origem <i class="fa-solid fa-globe"></i></label>
+          <select class="form-select" name="origem" [(ngModel)]="nomeOrigem">
+            <option *ngFor="let origem of origens" [value]="origem.Id">{{origem.Name}}</option>
+          </select>
+        </div>
       </div>
-      <mat-paginator 
-          class="w-100"
-          [pageSizeOptions]="[5, 10, 25]"
-          aria-label="Select page">
-      </mat-paginator>  
+      <div class="row mb-2 mt-2">
+        <div class="col-md-6 form-group">
+          <label>Patologista <i class="fa-solid fa-vial-virus"></i></label>
+          <select class="form-select" name="patologista" [(ngModel)]="patologista">
+            <option *ngFor="let patologista of patologistas" [value]="patologista.Id">{{patologista.Name}}</option>
+          </select>
+        </div>
+        <div class="col-md-6 form-group">
+          <label>Médico <i class="fa-solid fa-user-doctor"></i></label>
+          <select class="form-select" name="medico" [(ngModel)]="medico">
+            <option *ngFor="let medico of medicos" [value]="medico.Id">{{medico.Name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-2 mt-2">
+        <div class="col-md-6 form-group">
+          <label>Convênio <i class="fa-solid fa-hand-holding-medical"></i></label>
+          <select class="form-select" name="convenio" [(ngModel)]="convenio">
+            <option *ngFor="let convenio of convenios" [value]="convenio.Id">{{convenio.Name}}</option>
+          </select>
+        </div>
+        <div class="col-md-6 form-group mt-4 d-flex justify-content-center">
+          <button class="me-2 btn btn-primary" type="submit">Filtrar <i class="fa-solid fa-filter"></i></button>
+          <button class="btn btn-danger" type="button" (click)="limparFiltros()">Limpar Filtro <i
+              class="fa-solid fa-filter-circle-xmark"></i></button>
+        </div>
+      </div>
+    </form>
+    <div class="mt-4">
+      <mat-form-field>
+        <mat-label>Pesquisar pelo Nome do Paciente</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Insira aqui o nome do paciente" #input>
+      </mat-form-field>
+
+      <div class="tableResponsive">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="Data">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+            <td mat-cell *matCellDef="let exame"> {{exame.Data}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Nr.Exame">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nr.Exame</th>
+            <td mat-cell *matCellDef="let exame"> {{exame.NrExame}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Nr.Guia">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nr.Guia</th>
+            <td mat-cell *matCellDef="let exame"> {{exame.NrGuia}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Previsão de Resultado">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Previsão de Resultado</th>
+            <td mat-cell *matCellDef="let exame"> {{exame.PrevisaoResultado}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Paciente">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Paciente</th>
+            <td mat-cell *matCellDef="let exame"> {{exame.Nome}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Exame">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Exame</th>
+            <td mat-cell *matCellDef="let exame"> {{exame.Exame}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Situação">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Situação</th>
+            <td mat-cell *matCellDef="let exame"> {{exame.Situacao}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Laudo">
+            <th mat-header-cell *matHeaderCellDef>Laudo</th>
+            <td mat-cell *matCellDef="let exame">
+              <button *ngIf="exame.DownloadPronto; else DontShowButton" class="btn btn-info btn-sm"
+                (click)="DownloadPDF($event)" [value]="exame.NrExame">
+                Baixar Laudo
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+        <div *ngIf="IsLoading; else ShowSpanNotFound"
+          style="display: flex; justify-content: center; align-items: center; background: white;">
+          <mat-spinner diameter="48" class="mt-4"></mat-spinner>
+        </div>
+        <mat-paginator class="" [pageSizeOptions]="[5, 10, 25]" aria-label="Select page">
+        </mat-paginator>
+      </div>
     </div>
   </div>
 </div>
 
 
 <ng-template #DontShowButton>
-    <td><span class="badge rounded-pill bg-danger">Não disponivel</span></td>
+  <td><span class="badge rounded-pill bg-danger">Não disponivel</span></td>
 </ng-template>
 
 <ng-template #ShowSpanNotFound>
