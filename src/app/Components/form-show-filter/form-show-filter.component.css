@@ -26,3 +26,8 @@ td, th {
   width: 25%;
   white-space: nowrap;
 }
+
+.button{
+  font-size: 12px; 
+  padding: 8px 12px;
+}

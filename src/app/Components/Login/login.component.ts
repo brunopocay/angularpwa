@@ -57,9 +57,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     if(this.loginForm.valid){
+        const user = this.loginForm.get('User');
+        user?.setValue(user.value.toLowerCase());
         const formData = this.loginForm.value;
-        this.showSpan = true;
-        
+        this.showSpan = true;      
         this.authService.login(formData).pipe(
           catchError((error: HttpErrorResponse) => {
           let errorMessage = 'Ocorreu um erro ao processar sua solicitação.';
