@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
-import { ApiResponse } from '../../Models/ApiResponse';
 import { Exame } from '../../Models/Exame';
 import { AuthService } from '../../Services/auth.service';
 import { DownloadService } from '../../Services/download.service';
 import { ExamesService } from '../../Services/exames.service';
+import { ApiResponseExames } from '../../Models/ApiResponseExames';
 
 @Component({
   selector: 'app-form-show-exames',
@@ -15,6 +15,7 @@ export class FormShowExamesComponent implements OnInit {
   constructor(private exameService$: ExamesService, private downloadService$: DownloadService, private authService$: AuthService) {}
   localStorageItens: {tipoUsuario:string | null, sessao: string | null }
   Exame:  Exame | undefined;
+  IsLoading: boolean = false;
 
  
   ngOnInit(): void {
@@ -28,11 +29,13 @@ export class FormShowExamesComponent implements OnInit {
 
   private _getExames(){
     if(this.localStorageItens.sessao != undefined) {
+      this.IsLoading = true;
       this.exameService$.GetExames(this.localStorageItens.sessao).pipe(
         take(1) 
-      ).subscribe((response: ApiResponse<Exame[]>) => {
-        if(response.IsSucess)
-          this.Exame = response.Data[0];
+      ).subscribe((response: ApiResponseExames) => {
+        if(response.IsSucess)    
+          this.IsLoading = false;  
+          this.Exame = response.Data?.Exames[0]
       });
     }
   }
