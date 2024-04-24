@@ -14,7 +14,7 @@ export class DownloadService {
     fetch(`${environment.apiURL}/${this.apiUrl}?sessao=${idSessao}&NrExame=${nrExame}`)
         .then(response => {
             if (response.status === 200) {
-                window.open(response.url, '_blank');
+                window.location.href = response.url;
             } else {
                 Swal.fire('Erro ao fazer download do laudo', 'Tente novamente, se o problema persistir procure o administrador do sistema.', 'error');
             }
