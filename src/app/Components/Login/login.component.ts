@@ -37,6 +37,17 @@ export class LoginComponent implements OnInit {
       Password: [''],
       checkterms: [false, Validators.requiredTrue]
     });
+    this._CheckTermsControl();
+  }
+
+  private _CheckTermsControl(): void {
+    const checktermsControl = this.loginForm.get('checkterms');
+    
+    checktermsControl?.valueChanges.subscribe(() => {
+      if (checktermsControl.value) {
+        checktermsControl.markAsTouched();
+      }
+    });
   }
 
   checkTermsAndConditions(): void {
@@ -45,7 +56,7 @@ export class LoginComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loginForm.get('checkterms')!.setValue(true);
-      } else {
+      } else if (result == undefined) {
         this.loginForm.get('checkterms')!.setValue(false);
       }
     });
