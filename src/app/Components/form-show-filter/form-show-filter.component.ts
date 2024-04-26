@@ -220,7 +220,7 @@ export class FormShowFilterComponent implements OnInit, AfterViewInit {
   }
 
   protected DownloadPDF(event: MouseEvent) {
-    const nrExame = (event.target as HTMLButtonElement).value;      
+    const nrExame = (event.currentTarget as HTMLButtonElement).value;      
     let nrExameFormatado = nrExame!.replace('/', '');
     this.downloadService$.DownloadPDF(this.localStorageItens.sessao!, nrExameFormatado);
   }
