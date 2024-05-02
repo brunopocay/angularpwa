@@ -49,10 +49,10 @@
         <a class="form-label" style="font-size: 12px;" (click)="checkTermsAndConditions()">Clique aqui para ler os termos</a>
       </label>
     </div>
-    <div *ngIf="loginForm.get('checkterms')!.invalid && (loginForm.get('checkterms')!.dirty || loginForm.get('checkterms')!.touched)">
-      <span *ngIf="loginForm.get('checkterms')?.errors?.['required']" class="alert alert-danger">Obrigátorio aceitar os termos de uso.</span>
+    <div *ngIf="loginForm.get('checkterms')!.invalid && (submitted || loginForm.get('checkterms')!.dirty || loginForm.get('checkterms')!.touched)">
+      <span *ngIf="loginForm.get('checkterms')?.errors?.['required']" class="alert alert-danger">Obrigatório aceitar os termos de uso.</span>
     </div>
-    <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary btn-block mt-4 w-100">Acessar Exames <i class="fa-solid fa-right-to-bracket"></i></button>
+    <button type="submit" class="btn btn-primary btn-block mt-4 w-100">Acessar Exames <i class="fa-solid fa-right-to-bracket"></i></button>
   </div>
 </form>
 <div class="text-center fw-bold">
