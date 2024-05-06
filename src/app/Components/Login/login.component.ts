@@ -17,6 +17,7 @@ import { TermosDeUsoComponent } from '../termos-de-uso/termos-de-uso.component';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  submitted: boolean = false;
   @ViewChild(LoginComponent) loginComponent!: LoginComponent;
 
   constructor(
@@ -67,6 +68,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
     if(this.loginForm.valid){
         const user = this.loginForm.get('User');
         user?.setValue(user.value.toLowerCase());

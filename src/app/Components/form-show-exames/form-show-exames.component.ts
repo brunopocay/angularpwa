@@ -5,6 +5,7 @@ import { AuthService } from '../../Services/auth.service';
 import { DownloadService } from '../../Services/download.service';
 import { ExamesService } from '../../Services/exames.service';
 import { ApiResponseExames } from '../../Models/ApiResponseExames';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-show-exames',
@@ -41,6 +42,14 @@ export class FormShowExamesComponent implements OnInit {
   }
 
   protected DownloadPDF(){
+    Swal.fire({
+      title: 'Efetuando download...',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading()
+      }
+    });
     if(this.Exame){
       let nrExameFormatado = this.Exame.NrExame.replace('/','')
       this.downloadService$.DownloadPDF(this.localStorageItens.sessao!, nrExameFormatado)
