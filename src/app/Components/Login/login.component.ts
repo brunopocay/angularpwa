@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -9,6 +8,7 @@ import { ApiResponse } from '../../Models/ApiResponse';
 import { UserResponse } from '../../Models/UserResponse';
 import { MatDialog } from '@angular/material/dialog';
 import { TermosDeUsoComponent } from '../termos-de-uso/termos-de-uso.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -18,13 +18,15 @@ import { TermosDeUsoComponent } from '../termos-de-uso/termos-de-uso.component';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted: boolean = false;
+  acceptedTerms: boolean = false;
   @ViewChild(LoginComponent) loginComponent!: LoginComponent;
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private formbuilder: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cookieService: CookieService
   ) {}
 
   showSpan = false;
@@ -36,19 +38,34 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formbuilder.group({
       User: [''],
       Password: [''],
-      checkterms: [false, Validators.requiredTrue]
+      checkterms: [false,Validators.requiredTrue]
     });
     this._CheckTermsControl();
+    this.setCheckboxFromCookie();
   }
 
   private _CheckTermsControl(): void {
     const checktermsControl = this.loginForm.get('checkterms');
-    
+   
     checktermsControl?.valueChanges.subscribe(() => {
-      if (checktermsControl.value) {
+      if (checktermsControl.value == true) {
         checktermsControl.markAsTouched();
+        this.onTermsAccepted();    
       }
     });
+  }
+
+  onTermsAccepted() {
+    this.cookieService.set('acceptedTerms', 'true');
+  }
+
+  setCheckboxFromCookie(): void {
+    const checktermsControl = this.loginForm.get('checkterms');
+    const checked = this.cookieService.get('acceptedTerms');
+
+    if (checked === 'true') {
+      checktermsControl?.setValue(true);
+    }
   }
 
   checkTermsAndConditions(): void {
