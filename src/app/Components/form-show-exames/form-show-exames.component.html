@@ -36,7 +36,7 @@
             <p><i class="fa-solid fa-square-arrow-up-right me-2"></i><strong>Situação:</strong></p>
             <p>{{Exame?.Situacao}}</p>
           </div>    
-          <div class="card-button" (click)="DownloadPDF()">
+          <div *ngIf="Exame?.DownloadPronto" class="card-button" (click)="DownloadPDF()">
             <i class="fa-solid fa-download me-2"></i><span class="custom-button">Download</span>
           </div>
         </div>
