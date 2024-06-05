@@ -47,7 +47,6 @@ export class ChangepasswordComponent implements OnInit  {
   changePassword(){
     this.inLoading=true;
     const formData = this.formChangePassword.value;  
-    console.log(formData);
     this.authService.ChangePassword(formData).pipe(
       catchError((error: HttpErrorResponse) => {
       let errorMessage = 'Ocorreu um erro ao processar sua solicitação.';
