@@ -13,7 +13,7 @@ import { UserChangePassword } from '../Models/UserChangePassword';
 export class AuthService {
 
   private url$ = "user/login";
-  private urlchange$ = "user/changedPassword";
+  private urlchange$ = "user/ChangePassword";
   private sessao$ = "Sessao";
   private tipousuario$ = "tipoUsuario";
   private trocarsenha$ = "tipoUsuario";
@@ -42,7 +42,7 @@ export class AuthService {
 
   public ChangePassword(UserChangePassword:UserChangePassword):Observable<ApiResponse<UserResponse>> {
     const httpOptions$ = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    return this._http.post<ApiResponse<UserResponse>>(`${environment.apiURL}/${this.urlchange$}`, UserChangePassword, httpOptions$)
+    return this._http.put<ApiResponse<UserResponse>>(`${environment.apiURL}/${this.urlchange$}`, UserChangePassword, httpOptions$)
   }
 
   public removeAuthSessao(): void {
