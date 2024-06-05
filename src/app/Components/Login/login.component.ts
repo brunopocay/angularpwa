@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
     });
     this._CheckTermsControl();
     this.setCheckboxFromCookie();
+    
   }
 
   private _CheckTermsControl(): void {
@@ -116,7 +117,13 @@ export class LoginComponent implements OnInit {
         this.showSpan = false;
         this.responseError = false;
         this.authService.setAuthSessao(response);
-        this.router.navigate(['/consultaexames']);
+        if(response.Data.TrocarSenha){
+            this.router.navigate(['/trocarsenha']);   
+        }
+        else{
+            this.router.navigate(['/consultaexames']); 
+        }
+       
       });
     }
   }
