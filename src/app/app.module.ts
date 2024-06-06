@@ -22,6 +22,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FooterComponent } from './Components/footer/footer.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { ChangepasswordComponent } from './Components/changepassword/changepassword.component';
+import { ChangePasswordPage } from './Views/ChangedPassword/ChangePasswordPage.component';
+import { LoaderComponent } from './Components/loader/loader.component';
 
 
 @NgModule({
@@ -33,7 +36,10 @@ import { MatButtonModule } from '@angular/material/button';
     LoginPage,
     FormShowExamesComponent,
     FormShowFilterComponent,
-    FooterComponent
+    FooterComponent,
+    ChangepasswordComponent,
+    ChangePasswordPage,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
