@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
@@ -41,8 +41,7 @@ export class LoginComponent implements OnInit {
       checkterms: [false,Validators.requiredTrue]
     });
     this._CheckTermsControl();
-    this.setCheckboxFromCookie();
-    
+    this.setCheckboxFromCookie(); 
   }
 
   private _CheckTermsControl(): void {
@@ -71,7 +70,6 @@ export class LoginComponent implements OnInit {
 
   checkTermsAndConditions(): void {
     const dialogRef = this.dialog.open(TermosDeUsoComponent);
-  
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loginForm.get('checkterms')!.setValue(true);
@@ -118,7 +116,9 @@ export class LoginComponent implements OnInit {
         this.responseError = false;
         this.authService.setAuthSessao(response);
         if(response.Data.TrocarSenha){
-            this.router.navigate(['/trocarsenha']);   
+          const usuario = this.loginForm.get('User') as FormControl;  
+          localStorage.setItem('usuario', usuario.value.toLowerCase());
+          this.router.navigate(['/trocarsenha']); 
         }
         else{
             this.router.navigate(['/consultaexames']); 
