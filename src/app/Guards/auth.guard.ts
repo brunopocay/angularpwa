@@ -16,7 +16,12 @@ import { AuthService } from '../Services/auth.service';
 
     if(authSessao && authSessao.sessao && authSessao.tipoUsuario){
       return true;
-    } else {
+    }
+    else if (authSessao.trocarSenha){
+      this.route.navigate(['/trocarsenha']);
+      return false;
+    } 
+    else {
       this.route.navigate(['/login']);
       return false;
     }

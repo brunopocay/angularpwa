@@ -1,0 +1,23 @@
+.showSpanned {
+    color: rgb(255, 136, 0);
+    font-weight: bold;
+    display: flex;
+    justify-content: center; 
+    padding: 4px;
+}
+
+.loading-spinner {
+    display: flex;   
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ffffff;
+    border-top: 8px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

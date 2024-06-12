@@ -20,6 +20,6 @@ export class AppComponent implements OnInit {
   }
 
   protected authenticated(): boolean {
-    return this.authService.isAuthenticated();
+    return this.authService.isAuthenticated() ;
   }
 }

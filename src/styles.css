@@ -3,6 +3,7 @@
 
 a {
   color: #0366d6;
+  cursor: pointer;
 }
 
 code {
@@ -27,9 +28,34 @@ code {
   font-weight: normal;
 }
 
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+
+.form-border{     
+  border-top: 5px solid rgba(0, 0, 255, 0.375); 
+  border-right: 5px solid rgba(0, 0, 255, 0.375);
+  border-bottom: 3px solid #ccc; 
+  border-left: 3px solid #ccc; 
+  border-radius: 15px; 
+  padding: 16px;
+}
+
+@media screen and (max-width:550px) {
+  #register{
+      width:auto !important;
+  }
+}
+
+#register{
+  font-family: 'Montserrat', sans-serif;
+}
+
