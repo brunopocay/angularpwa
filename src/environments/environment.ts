@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  apiURL: 'http://localhost:5001/api'
+  production: true,
+  apiURL: "https://sphera.cbminformatica.com.br/api"
 };
