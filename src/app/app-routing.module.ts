@@ -8,7 +8,7 @@ import { ChangePasswordPage } from './Views/ChangedPassword/ChangePasswordPage.c
 const routes: Routes = [
   { path: 'consultaexames', component: HomeComponent, pathMatch: 'full', canActivate: [authGuard]},
   { path: 'login', component: LoginPage }, 
-  { path:'trocarsenha',component:ChangePasswordPage },  
+  { path: 'trocarsenha', component:ChangePasswordPage },  
   { path: '**', redirectTo: '/login' },
 
 ];
