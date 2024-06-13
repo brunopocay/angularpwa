@@ -8,10 +8,11 @@ import {
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, throwError } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private auth: AuthService) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -19,9 +20,8 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status == 401 || error.status == 403) {
-          localStorage.removeItem('Sessao');
-          localStorage.removeItem('tipoUsuario');
+        if (error.status == 401) {
+          this.auth.removeAuthSessao();
           this.router.navigate(['/login']);
         }
         return throwError(() => error);

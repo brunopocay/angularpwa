@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { AuthService } from '../../Services/auth.service';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { ApiResponse } from '../../Models/ApiResponse';
@@ -12,19 +17,19 @@ import { UserChangePassword } from '../../Models/UserChangePassword';
 @Component({
   selector: 'app-changepassword',
   templateUrl: './changepassword.component.html',
-  styleUrls: ['./changepassword.component.css']
+  styleUrls: ['./changepassword.component.css'],
 })
-export class ChangepasswordComponent implements OnInit  {
-  formChangePassword:FormGroup;
+export class ChangepasswordComponent implements OnInit {
+  formChangePassword: FormGroup;
   fieldTextTypePassword: boolean;
   fieldTextTypeNewPassword: boolean;
   fieldTextTypeRepeatPassword: boolean;
-  inLoading:boolean=false;
+  inLoading: boolean = false;
 
   constructor(
     private authService: AuthService,
     private formbuilder: FormBuilder,
-    private router:Router
+    private router: Router
   ) {}
 
   responseError = false;
@@ -45,41 +50,50 @@ export class ChangepasswordComponent implements OnInit  {
     this.formChangePassword = this.formbuilder.group({
       User: [user],
       OldPassword: ['', Validators.required],
-      NewPassword:['', Validators.required],
-      RepeatPassword: [null, Validators.required, FormValidators.EqualsTo('NewPassword')]
-    }); 
+      NewPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
+      RepeatPassword: ['', [Validators.required]],
+    }, {validator: FormValidators.EqualsTo('NewPassword', 'RepeatPassword')});
+
+    this.formChangePassword.get('NewPassword')?.valueChanges.subscribe(() => {
+      this.formChangePassword.get('RepeatPassword')?.updateValueAndValidity();
+    });
   }
 
-  changePassword(){
+  changePassword() {
     this.inLoading = true;
-    const formData = this.formChangePassword.value;  
+    const formData = this.formChangePassword.value;
     const userChangePass: UserChangePassword = {
       User: formData.User,
       Password: formData.OldPassword,
-      NewPassword: formData.NewPassword
+      NewPassword: formData.NewPassword,
     };
-    this.authService.ChangePassword(userChangePass).pipe(
-      catchError((error: HttpErrorResponse) => {
-      let errorMessage = 'Ocorreu um erro ao processar sua solicitação.';
-      if (error.error) {
-        errorMessage = `${error.error}`;
-      }
-      this.inLoading = false;
-      this.responseError = true;
-      this.responseMessageError = errorMessage;
-      
-      setTimeout(() => {
-        this.responseError = false;
-      }, 3000);
-      
-      return throwError(() => error);
-    })
-  ).subscribe((response: ApiResponse<UserResponse>) => {
-    this.inLoading = false;
-    this.authService.setAuthSessao(response);
-    this.router.navigate(['/consultaexames']); 
-    localStorage.removeItem('usuario');
-  });
+    this.inLoading = true;
+    this.authService
+      .ChangePassword(userChangePass)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = 'Ocorreu um erro ao processar sua solicitação.';
+          if (error && error.status === 403) {
+            errorMessage = 'Senha antiga está incorreta. Por favor, tente novamente.';
+          } 
+          
+          this.responseError = true;
+          this.responseMessageError = errorMessage;
+          this.inLoading = false;         
+
+          setTimeout(() => {   
+            this.responseMessageError;
+            }, 3000);
+          
+
+          return throwError(() => this.responseMessageError);
+        })
+      )
+      .subscribe((response: ApiResponse<UserResponse>) => {
+        this.inLoading = false;
+        this.authService.setAuthSessao(response);
+        this.router.navigate(['/consultaexames']);
+        localStorage.removeItem('usuario');
+      });
   }
-  
 }

@@ -1,17 +1,26 @@
-import { AbstractControl, AsyncValidatorFn, ValidationErrors } from "@angular/forms";
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-export class FormValidators{
-    static EqualsTo(otherField: string): AsyncValidatorFn{
-        return (control: AbstractControl): Promise<ValidationErrors | null> => {
-            return new Promise((resolve) => {
-                const field = control.root.get(otherField);
+export class FormValidators {
+  static EqualsTo(controlName: string, matchingControlName: string): ValidatorFn {
+    return (formGroup: AbstractControl): { [key: string]: boolean } | null => {
+      const control = formGroup.get(controlName);
+      const matchingControl = formGroup.get(matchingControlName);
 
-                if(!field || control.value !== field.value){
-                    resolve({ EqualsTo: otherField})
-                } else {
-                    resolve(null);
-                }
-            })
-        }
-    }
+      if (!control || !matchingControl) {
+        return null;
+      }
+
+      if (matchingControl.errors && !matchingControl.errors['EqualsTo']) {
+        return null;
+      }
+
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ EqualsTo: true });
+        return { EqualsTo: true };
+      } else {
+        matchingControl.setErrors(null);
+        return null;
+      }
+    };
+  }
 }
