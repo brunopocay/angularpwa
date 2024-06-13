@@ -13,7 +13,7 @@ import { UserChangePassword } from '../Models/UserChangePassword';
 export class AuthService {
 
   private url$ = "user/login";
-  private urlchange$ = "user/ChangedPassword";
+  private urlchange$ = "user/ChangePassword";
   private sessao$ = "Sessao";
   private tipousuario$ = "tipoUsuario";
   private trocarsenha$ = "trocarsenha";
