@@ -1,13 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { catchError, take, throwError } from 'rxjs';
+import { catchError, take, throwError, merge, startWith, switchMap, of as observableOf, map,} from 'rxjs';
 import { Exame } from '../../Models/Exame';
 import { AuthService } from '../../Services/auth.service';
 import { ExamesService } from '../../Services/exames.service';
 import { DownloadService } from '../../Services/download.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormatarDataParaString, addDaysToDate } from '../../Helpers/FormatarData';
+import { FormatarDataParaString,  addDaysToDate} from '../../Helpers/FormatarData';
 import { ApiResponseExames } from '../../Models/ApiResponseExames';
 import { GetfiltrosService } from '../../Services/getfiltros.service';
 import { FilterResponse } from '../../Models/FilterResponse';
@@ -21,9 +21,19 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./form-show-filter.component.css'],
 })
 export class FormShowFilterComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Data', 'Nr.Exame', 'Nr.Guia', 'Previsão de Resultado', 'Paciente', 'Exame', 'Situação', 'Laudo'];
+  displayedColumns: string[] = [
+    'Data',
+    'Nr.Exame',
+    'Nr.Guia',
+    'Previsão de Resultado',
+    'Paciente',
+    'Exame',
+    'Situação',
+    'Laudo',
+  ];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('formulario') formulario: NgForm;
+
   dataMin: string;
   dataMax: string;
   requisicao: string;
@@ -33,38 +43,76 @@ export class FormShowFilterComponent implements OnInit, AfterViewInit {
   nomeOrigem: string;
   patologista: string;
   medico: string;
+  totalExames: number | undefined;
   listaDeExames: Exame[] = [];
   origens: FilterResponse[] = [];
   hospitais: FilterResponse[] = [];
   medicos: FilterResponse[] = [];
   convenios: FilterResponse[] = [];
   patologistas: FilterResponse[] = [];
-  localStorageItens: { tipoUsuario: string | null, sessao: string | null };
-  dataSource = new MatTableDataSource<Exame>()
+  localStorageItens: { tipoUsuario: string | null; sessao: string | null };
+  dataSource = new MatTableDataSource<Exame>();
   repository: GetFilterResponseRepository;
   IsLoading = true;
 
-  constructor(private examesService$: ExamesService, private authService$: AuthService, private downloadService$: DownloadService, private getFiltroService: GetfiltrosService) {
+  constructor(
+    private examesService$: ExamesService,
+    private authService$: AuthService,
+    private downloadService$: DownloadService,
+    private getFiltroService: GetfiltrosService
+  ) {
     this.repository = new GetFilterResponseRepository(getFiltroService);
   }
 
   ngOnInit(): void {
     this._getLocalStorage();
-    this.GetOrigem();
-    this.GetConvenio();
-    this.GetHospital();
-    this.GetMedico();
-    this.GetPatologista();
+    this.repository.GetAllFilters(this.localStorageItens.sessao!);
+    this.dataSource.paginator!.pageIndex = 0;
     this.GetListaExames();
   }
-  
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.IsLoading = true;
+          return this.examesService$
+            .GetExamesWithFilter(
+              this.localStorageItens.sessao!,
+              this.dataSource.paginator!.pageIndex,
+              FormatarDataParaString(this.dataMin),
+              FormatarDataParaString(this.dataMax),
+              this.nomePaciente,
+              this.nomeOrigem,
+              this.convenio,
+              this.hospital,
+              this.patologista,
+              this.medico,
+              this.requisicao
+            )
+            .pipe(catchError(() => observableOf(null)));
+        }),
+        map((response) => {
+          if (response === null) {
+            return [];
+          }
+          this.IsLoading = false;
+
+          this.totalExames = response.Data!.TotalExames;
+          return response.Data!.Exames;
+        })
+      )
+      .subscribe((response) => {
+        this.dataSource.data = response;
+      });
   }
 
   getMaxDate = () => {
     return addDaysToDate(this.dataMin, 30);
-  }
+  };
 
   updateMaxDate(): void {
     if (this.dataMin) {
@@ -83,24 +131,26 @@ export class FormShowFilterComponent implements OnInit, AfterViewInit {
 
   filterByData(): void {
     if (!this.dataMin || !this.dataMax) {
-      Swal.fire("Data inicial e/ou data final não preenchido.", "Preencha os filtros de data !", "error");
+      Swal.fire('Data inicial e/ou data final não preenchido.', 'Preencha os filtros de data !', 'error'
+      );
     } else {
       const dataMinDate = new Date(this.dataMin);
       const dataMaxDate = new Date(this.dataMax);
-  
-      // Adiciona 30 dias à data mínima
+
+      // Adiciona 180 dias à data mínima
       const dataMaxLimite = new Date(dataMinDate.getTime());
-      dataMaxLimite.setDate(dataMaxLimite.getDate() + 30);
-  
+      dataMaxLimite.setDate(dataMaxLimite.getDate() + 180);
+
       if (dataMinDate > dataMaxDate) {
-        Swal.fire("Data inicial maior que a data final.", "Preencha o filtro novamente !", "error");
+        Swal.fire('Data inicial maior que a data final.','Preencha o filtro novamente !','error');
       } else if (dataMaxDate > dataMaxLimite) {
-        Swal.fire("Data final fora do intervalo permitido.", "A data final não pode exceder 30 dias após a data inicial !", "error");
+        Swal.fire('Data final fora do intervalo permitido.','A data final não pode exceder 180 dias após a data inicial !','error');
       } else {
         // Formate as datas para o formato desejado
         const dataMinFormatted = FormatarDataParaString(this.dataMin);
         const dataMaxFormatted = FormatarDataParaString(this.dataMax);
-        
+
+        this.dataSource.paginator!.pageIndex = 0;
         // Chame a função GetListaExames com os filtros
         this.GetListaExames(
           dataMinFormatted,
@@ -116,89 +166,47 @@ export class FormShowFilterComponent implements OnInit, AfterViewInit {
       }
     }
   }
-  
-  limparFiltros(){
-    this.dataMin = '',
-    this.dataMax = '',
-    this.nomePaciente = '',
-    this.nomeOrigem = '',
-    this.convenio = '',
-    this.hospital = '',
-    this.patologista = '',
-    this.medico = '',
-    this.requisicao = ''
-  }
 
-  async GetOrigem(){
-    try {
-        const origens = await this.repository.GetOrigem(this.localStorageItens.sessao!);
-        this.origens = origens;
-    } catch (error) {
-        console.error("Erro ao obter os dados de origem:", error);
-    }
-  }
-
-  async GetConvenio(){
-    try {
-        const convenios = await this.repository.GetConvenio(this.localStorageItens.sessao!);
-        this.convenios = convenios;
-    } catch (error) {
-        console.error("Erro ao obter os dados de convenio:", error);
-    }
-  }
-
-  async GetHospital(){
-    try {
-        const hospitais = await this.repository.GetHospital(this.localStorageItens.sessao!);
-        this.hospitais = hospitais;
-    } catch (error) {
-        console.error("Erro ao obter os dados de hospital:", error);
-    }
-  }
-
-  async GetMedico(){
-    try {
-        const medicos = await this.repository.GetMedico(this.localStorageItens.sessao!);
-        this.medicos = medicos;
-    } catch (error) {
-        console.error("Erro ao obter os dados de medico:", error);
-    }
-  }
-     
-  async GetPatologista(){
-    try {
-        const patologistas = await this.repository.GetPatologista(this.localStorageItens.sessao!);
-        this.patologistas = patologistas;
-    } catch (error) {
-        console.error("Erro ao obter os dados de patologista:", error);
-    }
+  limparFiltros() {
+    (this.dataMin = ''),
+      (this.dataMax = ''),
+      (this.nomePaciente = ''),
+      (this.nomeOrigem = ''),
+      (this.convenio = ''),
+      (this.hospital = ''),
+      (this.patologista = ''),
+      (this.medico = ''),
+      (this.requisicao = '');
   }
 
   GetListaExames(
-    dataMinFormatted?: string, 
+    dataMinFormatted?: string,
     dataMaxFormatted?: string,
-    paciente?:string, 
-    origem?: string, 
+    paciente?: string,
+    origem?: string,
     convenio?: string,
     hospital?: string,
     patologistas?: string,
     medico?: string,
     nrguia?: string
-    ){
+  ) {
     this.IsLoading = true;
     this.dataSource.data = [];
-    this.examesService$.GetExamesWithFilter(
-      this.localStorageItens.sessao!, 
-      dataMinFormatted,
-      dataMaxFormatted, 
-      paciente,
-      origem,
-      convenio,
-      hospital,
-      patologistas,
-      medico,
-      nrguia
-    ).pipe(
+    this.examesService$
+      .GetExamesWithFilter(
+        this.localStorageItens.sessao!,
+        this.dataSource.paginator?.pageIndex,
+        dataMinFormatted,
+        dataMaxFormatted,
+        paciente,
+        origem,
+        convenio,
+        hospital,
+        patologistas,
+        medico,
+        nrguia
+      )
+      .pipe(
         take(1),
         catchError((error: HttpErrorResponse) => {
           if (error) {
@@ -212,7 +220,8 @@ export class FormShowFilterComponent implements OnInit, AfterViewInit {
         this.dataSource.data = response.Data!.Exames;
         this.IsLoading = false;
         this.listaDeExames = this.dataSource.data;
-    });
+        this.totalExames = response.Data?.TotalExames;
+      });
   }
 
   private _getLocalStorage() {
@@ -220,19 +229,20 @@ export class FormShowFilterComponent implements OnInit, AfterViewInit {
   }
 
   //TODO: realizar botão de aguardando download.
-  protected DownloadPDF(nrExame: string) {     
+  protected DownloadPDF(nrExame: string) {
     Swal.fire({
       title: 'Efetuando download...',
       showConfirmButton: false,
       allowOutsideClick: false,
       didOpen: () => {
-        Swal.showLoading()
-      }
+        Swal.showLoading();
+      },
     });
 
     let nrExameFormatado = nrExame.replace('/', '');
-    this.downloadService$.DownloadPDF(this.localStorageItens.sessao!, nrExameFormatado)
+    this.downloadService$.DownloadPDF(
+      this.localStorageItens.sessao!,
+      nrExameFormatado
+    );
   }
 }
-
-
