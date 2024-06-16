@@ -18,8 +18,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Data final <small style="color: red;">*</small></label>
-                <input type="date" class="form-control" [(ngModel)]="dataMax" name="dataFinal" #dataFinal="ngModel"
-                  [max]="getMaxDate()" required>
+                <input type="date" class="form-control" [(ngModel)]="dataMax" name="dataFinal" #dataFinal="ngModel" required>
                 <div *ngIf="dataFinal.invalid && (dataFinal.dirty || dataFinal.touched)" style="color: red;">
                   <div *ngIf="dataFinal.errors?.['required']">Data Final é obrigatória</div>
                 </div>

@@ -1,8 +1,8 @@
 <div class="mt-4 customcontainer" *ngIf="IsPaciente; else ShowFilter">
-    <app-form-show-exames></app-form-show-exames>
+    <app-card-result-exame-paciente></app-card-result-exame-paciente>
 </div>
 <ng-template #ShowFilter>
     <div class="container">
-        <app-form-show-filter></app-form-show-filter>
+        <app-exames-filter-form></app-exames-filter-form>
     </div>
 </ng-template>

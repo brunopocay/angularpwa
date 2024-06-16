@@ -42,6 +42,9 @@ export class ExamesService {
   ):Observable<ApiResponseExames>{
     const httpOptions$ ={headers: new HttpHeaders({'Content-Type': 'application/json'})}
     let pageSize = 20;
+    if (page == undefined){
+      page = 0;
+    }
 
     let params = new HttpParams().set('sessao', idSessao);
       if (page !== undefined) params = params.set('Pagina', (page + 1).toString());    
@@ -56,7 +59,6 @@ export class ExamesService {
       if (medico !== undefined) params = params.set('GrupoMedico', medico);
       if (nrguia !== undefined) params = params.set('Requisicao', nrguia);
 
-      console.log(params.get('Pagina'))
     return this.http$.get<ApiResponseExames>(`${environment.apiURL}/${this.urlapi$}`, {params:  params, ...httpOptions$});
   }
 
