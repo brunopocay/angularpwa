@@ -18,8 +18,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Data final <small style="color: red;">*</small></label>
-                <input type="date" class="form-control" [(ngModel)]="dataMax" name="dataFinal" #dataFinal="ngModel"
-                  [max]="getMaxDate()" required>
+                <input type="date" class="form-control" [(ngModel)]="dataMax" name="dataFinal" #dataFinal="ngModel" required>
                 <div *ngIf="dataFinal.invalid && (dataFinal.dirty || dataFinal.touched)" style="color: red;">
                   <div *ngIf="dataFinal.errors?.['required']">Data Final é obrigatória</div>
                 </div>
@@ -137,7 +136,7 @@
           style="display: flex; justify-content: center; align-items: center; background: white;">
           <mat-spinner diameter="48" class="mt-4"></mat-spinner>
         </div>
-        <mat-paginator class="" [pageSizeOptions]="[5, 10, 25]" aria-label="Select page">
+        <mat-paginator [length]="totalExames" class="" [pageSizeOptions]="[20]" aria-label="Select page">
         </mat-paginator>
       </div>
     </div>

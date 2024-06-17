@@ -10,8 +10,8 @@ import { NavMenuComponent } from '../app/Components/NavMenu/nav-menu.component';
 import { HomeComponent } from '../app/Views/Dashboard/home.component';
 import { LoginPage } from '../app/Views/Login/login-page.component';
 import { AppComponent } from './app.component';
-import { FormShowExamesComponent } from './Components/form-show-exames/form-show-exames.component';
-import { FormShowFilterComponent } from './Components/form-show-filter/form-show-filter.component';
+import { CardResultExamePacienteComponent } from './Components/CardResultExamePaciente/cardresultexamepaciente.component';
+import { ExamesFilterFormComponent } from './Components/ExamesFilterForm/examesfilterform.component';
 import { AuthInterceptor } from './Services/auth.interceptor';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,6 +25,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ChangepasswordComponent } from './Components/changepassword/changepassword.component';
 import { ChangePasswordPage } from './Views/ChangedPassword/ChangePasswordPage.component';
 import { LoaderComponent } from './Components/loader/loader.component';
+import { DatePipe } from '@angular/common';
+
 
 
 @NgModule({
@@ -34,14 +36,15 @@ import { LoaderComponent } from './Components/loader/loader.component';
     HomeComponent,
     LoginComponent,
     LoginPage,
-    FormShowExamesComponent,
-    FormShowFilterComponent,
+    CardResultExamePacienteComponent,
+    ExamesFilterFormComponent,   
     FooterComponent,
     ChangepasswordComponent,
     ChangePasswordPage,
     LoaderComponent
   ],
   imports: [
+    DatePipe,
     BrowserModule,
     HttpClientModule,
     FormsModule,
