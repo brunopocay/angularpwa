@@ -19,12 +19,12 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status == 401) {
+      catchError((response: HttpErrorResponse) => {
+        if (response.status == 401 || response.status == 403 && response.error.Error.includes('Sessao invalida')) {
           this.auth.removeAuthSessao();
           this.router.navigate(['/login']);
         }
-        return throwError(() => error);
+        return throwError(() => response);
       })
     );
   }
