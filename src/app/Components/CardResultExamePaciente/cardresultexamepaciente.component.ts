@@ -8,11 +8,11 @@ import { ApiResponseExames } from '../../Models/ApiResponseExames';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-form-show-exames',
-  templateUrl: './form-show-exames.component.html',
-  styleUrls: ['./form-show-exames.component.css']
+  selector: 'app-card-result-exame-paciente',
+  templateUrl: './cardresultexamepaciente.component.html',
+  styleUrls: ['./cardresultexamepaciente.component.css']
 })
-export class FormShowExamesComponent implements OnInit {
+export class CardResultExamePacienteComponent implements OnInit {
   constructor(private exameService$: ExamesService, private downloadService$: DownloadService, private authService$: AuthService) {}
   localStorageItens: {tipoUsuario:string | null, sessao: string | null }
   Exame:  Exame | undefined;
