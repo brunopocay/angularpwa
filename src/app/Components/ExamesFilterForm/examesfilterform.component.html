@@ -5,7 +5,7 @@
       <div class="row mb-2 mt-2">
         <div class="col-md-6">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 fw-bold">
               <div class="form-group">
                 <label>Data inicial <small style="color: red;">*</small></label>
                 <input type="date" class="form-control" [(ngModel)]="dataMin" name="dataInicial" #dataInicial="ngModel"
@@ -15,7 +15,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 fw-bold">
               <div class="form-group">
                 <label>Data final <small style="color: red;">*</small></label>
                 <input type="date" class="form-control" [(ngModel)]="dataMax" name="dataFinal" #dataFinal="ngModel" required>
@@ -26,13 +26,20 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 form-group">
+        <div class="col-md-6 form-group fw-bold">
           <label>Requisição <i class="fa-solid fa-file-lines"></i></label>
           <input type="text" class="form-control" [(ngModel)]="requisicao" name="requisicao">
         </div>
       </div>
 
-      <div class="row mb-2 mt-2">
+      <div class="row my-2 fw-bold">
+          <div class="form-group">
+            <label>Paciente <i class="fa-solid fa-user"></i></label>
+            <input type="text" class="form-control" [(ngModel)]="nomePaciente" name="paciente">
+          </div>
+      </div>
+
+      <div class="row mb-2 mt-2 fw-bold">
         <div class="col-md-6 form-group">
           <label>Hospital <i class="fa-solid fa-hospital"></i></label>
           <select class="form-select" name="hospital" [(ngModel)]="hospital">
@@ -46,7 +53,7 @@
           </select>
         </div>
       </div>
-      <div class="row mb-2 mt-2">
+      <div class="row mb-2 mt-2 fw-bold">
         <div class="col-md-6 form-group">
           <label>Patologista <i class="fa-solid fa-vial-virus"></i></label>
           <select class="form-select" name="patologista" [(ngModel)]="patologista">
@@ -61,7 +68,7 @@
         </div>
       </div>
       <div class="row mb-2 mt-2">
-        <div class="col-md-6 form-group">
+        <div class="col-md-6 form-group fw-bold">
           <label>Convênio <i class="fa-solid fa-hand-holding-medical"></i></label>
           <select class="form-select" name="convenio" [(ngModel)]="convenio">
             <option *ngFor="let convenio of convenios" [value]="convenio.Id">{{convenio.Name}}</option>
@@ -75,10 +82,10 @@
       </div>
     </form>
     <div class="mt-4">
-      <mat-form-field>
+      <!-- <mat-form-field>
         <mat-label>Pesquisar pelo Nome do Paciente</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Insira aqui o nome do paciente" #input>
-      </mat-form-field>
+      </mat-form-field> -->
 
       <div class="tableResponsive">
         <table mat-table [dataSource]="dataSource" matSort>
