@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from '../app/Components/Login/login.component';
-import { NavMenuComponent } from '../app/Components/NavMenu/nav-menu.component';
+import { NavMenuComponent } from './Components/NavMenu/nav-menu.component';
 import { HomeComponent } from '../app/Views/Dashboard/home.component';
 import { LoginPage } from '../app/Views/Login/login-page.component';
 import { AppComponent } from './app.component';
