@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
@@ -26,6 +26,7 @@ import { ChangepasswordComponent } from './Components/changepassword/changepassw
 import { ChangePasswordPage } from './Views/ChangedPassword/ChangePasswordPage.component';
 import { LoaderComponent } from './Components/loader/loader.component';
 import { DatePipe } from '@angular/common';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 
@@ -57,7 +58,13 @@ import { DatePipe } from '@angular/common';
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     {
