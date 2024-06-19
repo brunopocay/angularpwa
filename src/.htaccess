@@ -1,5 +1,3 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/index.html
-RewriteRule ^angularpwa/(consultaexames|login|trocarsenha) /index.html [L]
-RewriteRule ^ /angularpwa/login [R]
