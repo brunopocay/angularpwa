@@ -11,35 +11,33 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3  # Using the most recent v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3  # Keeping the same version (v3) for stability
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.*'
+          node-version: '14'  # Adjust the Node.js version as needed
 
-      - run: npm install --force
+      - name: Install dependencies
+        run: npm install
 
-      - run: npm run build
+      - name: Build
+        run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v2  # Using the latest v2 for compatibility
-
-      - uses: actions/upload-artifact@v3  # Using the latest v3 for potential improvements
+      - name: Archive production artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: deploy-artifact  # Optional name for the artifact
-          path: 'dist/front-web-labstecca-angular'
+          name: deploy-artifact
+          path: dist/front-web-labstecca-angular  # Adjust the path to your built artifacts
 
-      - id: deployment
-        uses: actions/deploy-pages@v1  # Using the latest v1 for deployments
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          artifact-name: deploy-artifact  # Ensure this matches the name used in upload-artifact step
