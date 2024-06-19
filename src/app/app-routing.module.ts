@@ -6,10 +6,10 @@ import { authGuard } from './Guards/auth.guard';
 import { ChangePasswordPage } from './Views/ChangedPassword/ChangePasswordPage.component';
 
 const routes: Routes = [
-  { path: 'consultaexames', component: HomeComponent, pathMatch: 'full', canActivate: [authGuard]},
-  { path: 'login', component: LoginPage }, 
-  { path: 'trocarsenha', component:ChangePasswordPage },  
-  { path: '**', redirectTo: '/login' },
+  { path: 'angularpwa/consultaexames', component: HomeComponent, pathMatch: 'full', canActivate: [authGuard]},
+  { path: 'angularpwa/login', component: LoginPage }, 
+  { path: 'angularpwa/trocarsenha', component:ChangePasswordPage },  
+  { path: '**', redirectTo: 'angularpwa/login' },
 
 ];
 
