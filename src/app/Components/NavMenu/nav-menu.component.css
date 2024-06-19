@@ -1,6 +1,6 @@
 header{
   height: 30vh;
-  background-image: url('/assets/ImagensLabstecca/imagem-laboratorio.jpg');
+  background-image: url('./assets/ImagensLabstecca/imagem-laboratorio.jpg');
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -17,7 +17,7 @@ html {
 
 @media (max-width: 768px) {
   img {
-    content: url("/assets/ImagensLabstecca/icone.png");
+    content: url("./assets/ImagensLabstecca/icone.png");
     max-width: 125px;
   }
 }
