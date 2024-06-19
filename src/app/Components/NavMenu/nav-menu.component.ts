@@ -6,7 +6,7 @@ import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-nav-menu',
-  templateUrl: './Nav-menu.component.html',
+  templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
