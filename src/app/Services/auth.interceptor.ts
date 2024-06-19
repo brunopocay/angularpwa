@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((response: HttpErrorResponse) => {
         if (response.status == 401 || response.status == 403 && response.error.Error.includes('Sessao invalida')) {
           this.auth.removeAuthSessao();
-          this.router.navigate(['/login']);
+          this.router.navigate(['/angularpwa/login']);
         }
         return throwError(() => response);
       })

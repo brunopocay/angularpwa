@@ -34,7 +34,7 @@ export class DownloadService {
             'Você será redirecionado para a tela de login novamente.',
             'error'
           ).then(() => {
-            this.route.navigate(['/login']);
+            this.route.navigate(['/angularpwa/login']);
           });
         } else {
           Swal.fire(

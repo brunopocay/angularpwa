@@ -18,11 +18,11 @@ import { AuthService } from '../Services/auth.service';
       return true;
     }
     else if (authSessao.trocarSenha){
-      this.route.navigate(['/trocarsenha']);
+      this.route.navigate(['/angularpwa/trocarsenha']);
       return false;
     } 
     else {
-      this.route.navigate(['/login']);
+      this.route.navigate(['/angularpwa/login']);
       return false;
     }
   }

@@ -92,7 +92,7 @@ export class ChangepasswordComponent implements OnInit {
       .subscribe((response: ApiResponse<UserResponse>) => {
         this.inLoading = false;
         this.authService.setAuthSessao(response);
-        this.router.navigate(['/consultaexames']);
+        this.router.navigate(['/angularpwa/consultaexames']);
         localStorage.removeItem('usuario');
       });
   }

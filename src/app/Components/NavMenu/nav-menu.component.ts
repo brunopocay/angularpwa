@@ -27,7 +27,7 @@ export class NavMenuComponent {
       icon: 'question'
     }).then((result) => {
       if (result.isConfirmed){
-        this.route$.navigate(['/login']);
+        this.route$.navigate(['/angularpwa/login']);
         this.authGuard$.removeAuthSessao();
       }
     })

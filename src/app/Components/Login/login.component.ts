@@ -126,9 +126,9 @@ export class LoginComponent implements OnInit {
           if (response.Data.TrocarSenha) {
             const usuario = this.loginForm.get('User') as FormControl;
             localStorage.setItem('usuario', usuario.value.toLowerCase());
-            this.router.navigate(['/trocarsenha']);
+            this.router.navigate(['/angularpwa/trocarsenha']);
           } else {
-            this.router.navigate(['/consultaexames']);
+            this.router.navigate(['/angularpwa/consultaexames']);
           }
         });
     }

@@ -14,7 +14,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit(): void {
     if(this.UserIsLoggedIn() == true){
-      this.router.navigate(['/consultaexames']);     
+      this.router.navigate(['/angularpwa/consultaexames']);     
     }    
   }
 
