@@ -39,7 +39,7 @@ jobs:
       - name: Upload
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist/front-web-labstecca-angular'
+          path: 'dist/front-web-labstecca-angular/browser'
 
       - name: Deploy
         id: deployment
