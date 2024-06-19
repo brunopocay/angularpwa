@@ -17,34 +17,29 @@ concurrency:
 
 jobs:
   deploy:
-    environment: 
+    environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3  # Using the most recent v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3  # Keeping the same version (v3) for stability
         with:
           node-version: '18.*'
 
-      - name: Install dependencies
-        run: npm install --force
+      - run: npm install --force
 
-      - name: Build Angular application
-        run: npm run build
+      - run: npm run build
 
       - name: Setup Pages
-        run: actions/configure-pages@v4
+        uses: actions/configure-pages@v2  # Using the latest v2 for compatibility
 
-      - name: Upload
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-artifacts@v3  # Using the latest v3 for potential improvements
         with:
+          name: deploy-artifact  # Optional name for the artifact
           path: 'dist/front-web-labstecca-angular/browser'
 
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - id: deployment
+        uses: actions/deploy-pages@v1  # Using the latest v1 for deployments
