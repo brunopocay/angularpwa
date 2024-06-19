@@ -1,15 +1,13 @@
-name: CI/CD Pipeline
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,16 +17,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18.*'
+          node-version: '16'
 
       - name: Install dependencies
-        run: npm install --force
+        run: npm install
 
       - name: Build Angular application
-        run: npm run build
+        run: npm run build --prod
 
-      - name: Archive production artifact
-        uses: actions/upload-artifact@v2
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          name: dist
-          path: dist/front-web-labstecca-angular/browser
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/front-web-labstecca-angular/browser  # Caminho dos arquivos de build do Angular
+          user_name: GitHub Actions
+          user_email: actions@github.com
+          publish_branch: gh-pages  # Branch do GitHub Pages
+          force_orphan: true  # Opcional: criar um branch órfão se não existir
