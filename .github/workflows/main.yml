@@ -39,7 +39,7 @@ jobs:
       - uses: actions/upload-artifacts@v3  # Using the latest v3 for potential improvements
         with:
           name: deploy-artifact  # Optional name for the artifact
-          path: 'dist/front-web-labstecca-angular/browser'
+          path: 'dist/front-web-labstecca-angular'
 
       - id: deployment
         uses: actions/deploy-pages@v1  # Using the latest v1 for deployments
