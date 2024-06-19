@@ -3,7 +3,7 @@ main{
 }
 
 .not-authenticated{
-    background: url("./assets/ImagensLabstecca/bg.jpg") no-repeat fixed;
+    background: url("/angularpwa/assets/ImagensLabstecca/bg.jpg") no-repeat fixed;
     background-size: cover;
     height: 100vh;
     margin: 0px 0px 0px;
