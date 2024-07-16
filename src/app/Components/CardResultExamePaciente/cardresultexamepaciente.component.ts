@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { take } from 'rxjs';
 import { Exame } from '../../Models/Exame';
 import { AuthService } from '../../Services/auth.service';
@@ -15,8 +15,11 @@ import Swal from 'sweetalert2';
 export class CardResultExamePacienteComponent implements OnInit {
   constructor(private exameService$: ExamesService, private downloadService$: DownloadService, private authService$: AuthService) {}
   localStorageItens: {tipoUsuario:string | null, sessao: string | null }
+  @ViewChild('video', { static: false }) videoElement!: ElementRef;
   Exame:  Exame | undefined;
   IsLoading: boolean = false;
+  mediaRecorder: any;
+  recordedChunks: Blob[] = [];
 
  
   ngOnInit(): void {
@@ -40,6 +43,50 @@ export class CardResultExamePacienteComponent implements OnInit {
       });
     }
   }
+
+  
+  async startCamera() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const video = this.videoElement.nativeElement;
+      video.srcObject = stream;
+      video.play();
+
+      this.mediaRecorder = new MediaRecorder(stream);
+      this.mediaRecorder.ondataavailable = (event: BlobEvent) => {
+        if (event.data.size > 0) {
+          this.recordedChunks.push(event.data);
+        }
+      };
+    } catch (error) {
+      console.error('Erro ao acessar a câmera: ', error);
+    }
+  }
+
+  startRecording() {
+    if (this.mediaRecorder && this.mediaRecorder.state !== 'recording') {
+      this.recordedChunks = [];
+      this.mediaRecorder.start();
+    }
+  }
+
+  stopRecording() {
+    if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
+      this.mediaRecorder.stop();
+      this.mediaRecorder.onstop = () => {
+        const videoBlob = new Blob(this.recordedChunks, { type: 'video/webm' });
+        const videoURL = URL.createObjectURL(videoBlob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = videoURL;
+        a.download = 'recorded_video.webm';
+        document.body.appendChild(a);
+        a.click();
+        URL.revokeObjectURL(videoURL);
+      };
+    }
+  }
+
 
   protected DownloadPDF(){
     Swal.fire({
